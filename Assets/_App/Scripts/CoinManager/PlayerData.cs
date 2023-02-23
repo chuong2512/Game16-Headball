@@ -30,7 +30,7 @@ public class PlayerData : BaseData
 
     public override void ResetData()
     {
-        intDiamond = 0;
+        intDiamond = 3;
         currentSong = 0;
         listSongs = new bool[Constant.countSong];
 
