@@ -407,18 +407,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void SetGAmeOverMenuTrue()
-    {
-        gameOverMenu.SetActive(true);
-    }
-
-    private float slowdownFactor = 0.01f;
-    private float slowdownLength = 0.01f;
-
-    private float lastTimeScale;
-    private float lastFixedDeltaTime;
-    private GameMode lastGameMode;
-
     void DoSlowmotion()
     {
         Time.timeScale = slowdownFactor;
@@ -432,6 +420,18 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1);
         CreateBall(num);
     }
+    
+    void SetGAmeOverMenuTrue()
+    {
+        gameOverMenu.SetActive(true);
+    }
+
+    private float slowdownFactor = 0.01f;
+    private float slowdownLength = 0.01f;
+
+    private float lastTimeScale;
+    private float lastFixedDeltaTime;
+    private GameMode lastGameMode;
 
     public void CreateBall(int playerNum = 0)
     {
@@ -478,14 +478,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private IEnumerator StartGame()
-    {
-        yield return new WaitForSeconds(3);
-        ball.GetComponent<Rigidbody2D>().isKinematic = false;
-        ball.GetComponent<Rigidbody2D>().simulated = true;
-        gameMode = GameMode.PLAY;
-    }
-
     private IEnumerator SetBallPos(Vector3 pos)
     {
         yield return new WaitForSeconds(1);
@@ -497,4 +489,12 @@ public class GameManager : MonoBehaviour
     {
         Instantiate(hitEffect, pos, Quaternion.identity);
     }
+    private IEnumerator StartGame()
+    {
+        yield return new WaitForSeconds(3);
+        ball.GetComponent<Rigidbody2D>().isKinematic = false;
+        ball.GetComponent<Rigidbody2D>().simulated = true;
+        gameMode = GameMode.PLAY;
+    }
+
 }

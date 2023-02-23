@@ -3,9 +3,8 @@ using System.Collections;
 
 public class AIController : MonoBehaviour
 {
-    public PlayerScripts player;
-
     public float[] forceDistances;
+    public PlayerScripts player;
 
     void Start()
     {

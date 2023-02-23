@@ -3,31 +3,14 @@ using System.Collections;
 
 public class SoundBtn : MonoBehaviour
 {
-    public Sprite onIcon, offIcon;
     private SpriteRenderer mysp;
+    public Sprite onIcon, offIcon;
 
-	void Start ()
-	{
+    void Start()
+    {
         mysp = GetComponent<SpriteRenderer>();
 
         SetSprite();
-    }
-
-    void SetSprite()
-    {
-        if (PlayerPrefs.GetInt(VariablesName.Sound, 1) == 1)
-        {
-            mysp.sprite = onIcon;
-        }
-        else
-        {
-            mysp.sprite = offIcon;
-        }
-    }
-
-    void OnMouseDown()
-    {
-        transform.localScale = new Vector3(0.9f, 0.9f, 1);
     }
 
     void OnMouseUp()
@@ -53,5 +36,22 @@ public class SoundBtn : MonoBehaviour
         PlayerPrefs.Save();
         AssetManager.Use.SetSoundVolume();
         SetSprite();
+    }
+
+    void SetSprite()
+    {
+        if (PlayerPrefs.GetInt(VariablesName.Sound, 1) == 1)
+        {
+            mysp.sprite = onIcon;
+        }
+        else
+        {
+            mysp.sprite = offIcon;
+        }
+    }
+
+    void OnMouseDown()
+    {
+        transform.localScale = new Vector3(0.9f, 0.9f, 1);
     }
 }

@@ -10,20 +10,17 @@ public class PlayerScripts : MonoBehaviour
     private float jumpHeight = 1.5f;
     private float gravity = -30f;
     private float groundDamping = 20f; // how fast do we change direction? higher means faster
-	private float inAirDamping = 5f;
+    private float inAirDamping = 5f;
 
-    [HideInInspector]
-	private float normalizedHorizontalSpeed = 0;
+    [HideInInspector] private float normalizedHorizontalSpeed = 0;
 
-	private CharacterController2D _controller;
-	private Animator _animator;
-	private RaycastHit2D _lastControllerColliderHit;
-	private Vector3 _velocity;
+    private CharacterController2D _controller;
+    private Animator _animator;
+    private RaycastHit2D _lastControllerColliderHit;
+    private Vector3 _velocity;
 
-    [HideInInspector]
-    public Sprite[] myFace;
-    [HideInInspector]
-    public Sprite myBody, myShoes;
+    [HideInInspector] public Sprite[] myFace;
+    [HideInInspector] public Sprite myBody, myShoes;
     private SpriteRenderer myHeadSp, myBodySp, myRShoe, myLShoe;
 
     private GameManager gm;
@@ -32,6 +29,7 @@ public class PlayerScripts : MonoBehaviour
     public bool isAi;
 
     private LastAction lastAction;
+
     public enum LastAction
     {
         STAY,
@@ -50,11 +48,11 @@ public class PlayerScripts : MonoBehaviour
     }
 
     void Start()
-	{
+    {
         // listen to some events for illustration purposes
         _controller.onControllerCollidedEvent += onControllerCollider;
-		_controller.onTriggerEnterEvent += onTriggerEnterEvent;
-		_controller.onTriggerExitEvent += onTriggerExitEvent;
+        _controller.onTriggerEnterEvent += onTriggerEnterEvent;
+        _controller.onTriggerExitEvent += onTriggerExitEvent;
 
         _controller.SetKickingFalse();
 
@@ -77,10 +75,10 @@ public class PlayerScripts : MonoBehaviour
     }
 
 
-	#region Event Listeners
+    #region Event Listeners
 
-	void onControllerCollider( RaycastHit2D hit )
-	{
+    void onControllerCollider(RaycastHit2D hit)
+    {
         // bail out on plain old ground hits cause they arent very interesting
         if (hit.normal.y == 1f)
             return;
@@ -92,11 +90,11 @@ public class PlayerScripts : MonoBehaviour
         //{
         //    print(hit.collider.name);
         //}
-	}
+    }
 
 
-	void onTriggerEnterEvent( Collider2D col )
-	{
+    void onTriggerEnterEvent(Collider2D col)
+    {
         //Debug.Log( "onTriggerEnterEvent: " + col.gameObject.name );
 
         if (col.name == "Ball" && gm.gameMode == GameMode.PLAY)
@@ -105,8 +103,8 @@ public class PlayerScripts : MonoBehaviour
         }
     }
 
-    void onTriggerExitEvent( Collider2D col )
-	{
+    void onTriggerExitEvent(Collider2D col)
+    {
         //Debug.Log( "onTriggerExitEvent: " + col.gameObject.name );
     }
 
@@ -114,12 +112,12 @@ public class PlayerScripts : MonoBehaviour
 
     // the Update loop contains a very simple example of moving the character around and controlling the animation
     void LateUpdate()
-	{
-		// grab our current _velocity to use as a base for all calculations
-		_velocity = _controller.velocity;
+    {
+        // grab our current _velocity to use as a base for all calculations
+        _velocity = _controller.velocity;
 
-        if ( _controller.isGrounded )
-			_velocity.y = 0;
+        if (_controller.isGrounded)
+            _velocity.y = 0;
 
         if (!isAi)
         {
@@ -135,7 +133,9 @@ public class PlayerScripts : MonoBehaviour
                             Input.GetTouch(i).phase == TouchPhase.Stationary ||
                             Input.GetTouch(i).phase == TouchPhase.Moved)
                         {
-                            RaycastHit2D hit = Physics2D.Raycast(gm.cameraButton.ScreenToWorldPoint(Input.GetTouch(i).position), Vector2.zero);
+                            RaycastHit2D hit =
+                                Physics2D.Raycast(gm.cameraButton.ScreenToWorldPoint(Input.GetTouch(i).position),
+                                    Vector2.zero);
 
                             if (hit.collider != null)
                             {
@@ -156,6 +156,7 @@ public class PlayerScripts : MonoBehaviour
                                 {
                                     Jump();
                                 }
+
                                 if (hit.collider.gameObject.name.Contains("ActionBtn") && gm.gameMode != GameMode.END)
                                 {
                                     Action();
@@ -173,7 +174,8 @@ public class PlayerScripts : MonoBehaviour
             {
                 if (Input.GetMouseButton(0) && gm.gameMode != GameMode.END)
                 {
-                    RaycastHit2D hit = Physics2D.Raycast(gm.cameraButton.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+                    RaycastHit2D hit = Physics2D.Raycast(gm.cameraButton.ScreenToWorldPoint(Input.mousePosition),
+                        Vector2.zero);
 
                     if (hit.collider != null)
                     {
@@ -194,6 +196,7 @@ public class PlayerScripts : MonoBehaviour
                         {
                             Jump();
                         }
+
                         if (hit.collider.gameObject.name.Contains("ActionBtn") && gm.gameMode != GameMode.END)
                         {
                             Action();
@@ -211,16 +214,18 @@ public class PlayerScripts : MonoBehaviour
             // ai controller
             AiController();
         }
-            
+
         // apply horizontal speed smoothing it
-        var smoothedMovementFactor = _controller.isGrounded ? groundDamping : inAirDamping; // how fast do we change direction?
-		_velocity.x = Mathf.Lerp( _velocity.x, normalizedHorizontalSpeed * runSpeed, Time.deltaTime * smoothedMovementFactor );
+        var smoothedMovementFactor =
+            _controller.isGrounded ? groundDamping : inAirDamping; // how fast do we change direction?
+        _velocity.x = Mathf.Lerp(_velocity.x, normalizedHorizontalSpeed * runSpeed,
+            Time.deltaTime * smoothedMovementFactor);
 
-		// apply gravity before moving
-		_velocity.y += gravity * Time.deltaTime;
+        // apply gravity before moving
+        _velocity.y += gravity * Time.deltaTime;
 
-		_controller.move( _velocity * Time.deltaTime );
-	}
+        _controller.move(_velocity * Time.deltaTime);
+    }
 
     void AiController()
     {
@@ -271,21 +276,6 @@ public class PlayerScripts : MonoBehaviour
         }
     }
 
-    public void MoveRight()
-    {
-        normalizedHorizontalSpeed = 1;
-
-        if (_controller.isGrounded && !_controller.GetKicking() && lastAction != LastAction.MOVE)
-        {
-            _animator.Play(Animator.StringToHash("Run"));
-
-            lastAction = LastAction.MOVE;
-        }
-
-        //if( transform.localScale.x < 0f )
-        //transform.localScale = new Vector3( -transform.localScale.x, transform.localScale.y, transform.localScale.z );
-    }
-
     public void MoveLeft()
     {
         normalizedHorizontalSpeed = -1;
@@ -301,6 +291,22 @@ public class PlayerScripts : MonoBehaviour
         //transform.localScale = new Vector3( transform.localScale.x, transform.localScale.y, transform.localScale.z );
     }
 
+    public void MoveRight()
+    {
+        normalizedHorizontalSpeed = 1;
+
+        if (_controller.isGrounded && !_controller.GetKicking() && lastAction != LastAction.MOVE)
+        {
+            _animator.Play(Animator.StringToHash("Run"));
+
+            lastAction = LastAction.MOVE;
+        }
+
+        //if( transform.localScale.x < 0f )
+        //transform.localScale = new Vector3( -transform.localScale.x, transform.localScale.y, transform.localScale.z );
+    }
+
+
     public void Stay()
     {
         normalizedHorizontalSpeed = 0;
@@ -310,18 +316,6 @@ public class PlayerScripts : MonoBehaviour
             _animator.Play(Animator.StringToHash("Idle"));
 
             lastAction = LastAction.STAY;
-        }
-    }
-
-    public void Jump()
-    {
-        // we can only jump whilst grounded
-        if (_controller.isGrounded && !_controller.GetKicking() && gm.gameMode != GameMode.END)
-        {
-            _velocity.y = Mathf.Sqrt(2f * jumpHeight * -gravity);
-            _animator.Play(Animator.StringToHash("Jump"));
-
-            lastAction = LastAction.JUMP;
         }
     }
 
@@ -337,7 +331,8 @@ public class PlayerScripts : MonoBehaviour
 
                 StartCoroutine(ChangeFace());
 
-                if (Vector3.Distance(transform.position, ball.transform.position) < 2.5f && gm.gameMode == GameMode.PLAY)
+                if (Vector3.Distance(transform.position, ball.transform.position) < 2.5f &&
+                    gm.gameMode == GameMode.PLAY)
                 {
                     Rigidbody2D rig = ball.GetComponent<Rigidbody2D>();
 
@@ -369,7 +364,8 @@ public class PlayerScripts : MonoBehaviour
 
                 StartCoroutine(ChangeFace());
 
-                if (Vector3.Distance(transform.position, ball.transform.position) < 2.5f && gm.gameMode == GameMode.PLAY)
+                if (Vector3.Distance(transform.position, ball.transform.position) < 2.5f &&
+                    gm.gameMode == GameMode.PLAY)
                 {
                     Rigidbody2D rig = ball.GetComponent<Rigidbody2D>();
 
@@ -393,6 +389,19 @@ public class PlayerScripts : MonoBehaviour
             }
         }
     }
+
+    public void Jump()
+    {
+        // we can only jump whilst grounded
+        if (_controller.isGrounded && !_controller.GetKicking() && gm.gameMode != GameMode.END)
+        {
+            _velocity.y = Mathf.Sqrt(2f * jumpHeight * -gravity);
+            _animator.Play(Animator.StringToHash("Jump"));
+
+            lastAction = LastAction.JUMP;
+        }
+    }
+
 
     public IEnumerator ChangeFace()
     {

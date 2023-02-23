@@ -1,32 +1,42 @@
 ﻿using UnityEngine;
 using System.Collections;
-
 using UnityEngine.SceneManagement;
+
+public enum GameMode
+{
+    AWAKE,
+    START,
+    PAUSE,
+    SLOWMOTION,
+    PLAY,
+    END
+};
 
 public class AssetManager : MonoBehaviour
 {
     public static AssetManager Use;
 
+
+    private float volume = 1.0f;
+    private AudioSource backgroundMusic, backgroundMusic2, backgroundEffect, sfxSound;
     public string[] playersName;
     public Sprite[] playerSprite0, playerSprite1, playerBodySprite, shoesSprites;
-
-    public Sprite[] ballSprites, groundSprites, groundIconSprites;
-
-    public Sprite[] dayAndNightSprites, WeatherSprites;
-    public int[] timesArray;
-    public Sprite[] aiLevelSprites;
 
     /// In Game
     public Sprite[] standsSprites;
 
     /// Audio
     public AudioClip ram_hit, bounce1, bounce2, net_sound;
+
     public AudioClip clap1, clap2, clap3, clap4;
     public AudioClip clickSound, startGameSound, endGameSound;
     public AudioClip[] weatherSound;
+    public Sprite[] ballSprites, groundSprites, groundIconSprites;
 
-    private float volume = 1.0f;
-    private AudioSource backgroundMusic, backgroundMusic2, backgroundEffect, sfxSound;
+    public Sprite[] dayAndNightSprites, WeatherSprites;
+    public int[] timesArray;
+    public Sprite[] aiLevelSprites;
+
 
     void Awake()
     {
@@ -52,9 +62,25 @@ public class AssetManager : MonoBehaviour
         }
     }
 
+    public void BackgroundEffectSound()
+    {
+        backgroundEffect.clip = weatherSound[PlayerPrefs.GetInt(VariablesName.Weather, 0)];
+        backgroundEffect.Play();
+    }
+
     void Init()
     {
         SetMusicVolume();
+    }
+
+    public void SetSoundVolume()
+    {
+        sfxSound.mute = !(PlayerPrefs.GetInt(VariablesName.Sound, 1) == 1);
+
+        backgroundMusic2.mute = !((SceneManager.GetActiveScene().name == "Game") &&
+                                  (PlayerPrefs.GetInt(VariablesName.Sound, 1) == 1));
+        backgroundEffect.mute = !((SceneManager.GetActiveScene().name == "Game") &&
+                                  (PlayerPrefs.GetInt(VariablesName.Sound, 1) == 1));
     }
 
     public void SetMusicVolume()
@@ -62,19 +88,6 @@ public class AssetManager : MonoBehaviour
         backgroundMusic.mute = !(PlayerPrefs.GetInt(VariablesName.Music, 1) == 1);
     }
 
-    public void SetSoundVolume()
-    {
-        sfxSound.mute = !(PlayerPrefs.GetInt(VariablesName.Sound, 1) == 1);
-
-        backgroundMusic2.mute = !((SceneManager.GetActiveScene().name == "Game") && (PlayerPrefs.GetInt(VariablesName.Sound, 1) == 1));
-        backgroundEffect.mute = !((SceneManager.GetActiveScene().name == "Game") && (PlayerPrefs.GetInt(VariablesName.Sound, 1) == 1));
-    }
-
-    public void BackgroundEffectSound()
-    {
-        backgroundEffect.clip = weatherSound[PlayerPrefs.GetInt(VariablesName.Weather, 0)];
-        backgroundEffect.Play();
-    }
 
     //////////////////////////////////////
 
@@ -136,6 +149,7 @@ public class AssetManager : MonoBehaviour
                         sfxSound.PlayOneShot(clap4, volume);
                         break;
                 }
+
                 break;
 
             case 7: // click
@@ -161,13 +175,3 @@ public class AssetManager : MonoBehaviour
         }
     }
 }
-
-public enum GameMode
-{
-    AWAKE,
-    START,
-    PAUSE,
-    SLOWMOTION,
-    PLAY,
-    END
-};

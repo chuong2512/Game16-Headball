@@ -34,36 +34,6 @@ public class BallController : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D col)
-    {
-        if (gm.gameMode == GameMode.PLAY)
-        {
-            if (col.gameObject.name == "P1Goal")
-            {
-                Vector3 temp = myRig.velocity;
-                temp.x /= 2f;
-                temp.y /= 2f;
-                myRig.velocity = temp;
-
-                gm.gameMode = GameMode.SLOWMOTION;
-                StartCoroutine(gm.CreateBallWait(2));
-                AssetManager.Use.PlaySound(6);
-            }
-
-            if (col.gameObject.name == "P2Goal")
-            {
-                Vector3 temp = myRig.velocity;
-                temp.x /= 2f;
-                temp.y /= 2f;
-                myRig.velocity = temp;
-
-                myRig.velocity = new Vector2(5, 5);
-                gm.gameMode = GameMode.SLOWMOTION;
-                StartCoroutine(gm.CreateBallWait(1));
-                AssetManager.Use.PlaySound(6);
-            }
-        }
-    }
 
     void OnCollisionEnter2D(Collision2D col)
     {
@@ -91,6 +61,37 @@ public class BallController : MonoBehaviour
                     AssetManager.Use.PlaySound(2);
                 else
                     AssetManager.Use.PlaySound(3);
+            }
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (gm.gameMode == GameMode.PLAY)
+        {
+            if (col.gameObject.name == "P1Goal")
+            {
+                Vector3 temp = myRig.velocity;
+                temp.x /= 2f;
+                temp.y /= 2f;
+                myRig.velocity = temp;
+
+                gm.gameMode = GameMode.SLOWMOTION;
+                StartCoroutine(gm.CreateBallWait(2));
+                AssetManager.Use.PlaySound(6);
+            }
+
+            if (col.gameObject.name == "P2Goal")
+            {
+                Vector3 temp = myRig.velocity;
+                temp.x /= 2f;
+                temp.y /= 2f;
+                myRig.velocity = temp;
+
+                myRig.velocity = new Vector2(5, 5);
+                gm.gameMode = GameMode.SLOWMOTION;
+                StartCoroutine(gm.CreateBallWait(1));
+                AssetManager.Use.PlaySound(6);
             }
         }
     }

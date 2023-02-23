@@ -12,6 +12,17 @@ public class MusicBtn : MonoBehaviour
 
         SetSprite();
     }
+    
+    
+    void OnMouseDown()
+    {
+        transform.localScale = new Vector3(0.9f, 0.9f, 1);
+    }
+
+    void OnMouseUp()
+    {
+        transform.localScale = new Vector3(1, 1, 1);
+    }
 
     void SetSprite()
     {
@@ -25,15 +36,6 @@ public class MusicBtn : MonoBehaviour
         }
     }
 
-    void OnMouseDown()
-    {
-        transform.localScale = new Vector3(0.9f, 0.9f, 1);
-    }
-
-    void OnMouseUp()
-    {
-        transform.localScale = new Vector3(1, 1, 1);
-    }
 
     void OnMouseUpAsButton()
     {

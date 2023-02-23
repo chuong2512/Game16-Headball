@@ -3,18 +3,18 @@ using System.Collections;
 
 public class HitEffectScript : MonoBehaviour
 {
-    public Sprite[] sprites;
     private SpriteRenderer sp;
     private int index;
+    public Sprite[] sprites;
 
-	void Start ()
-	{
+    void Start()
+    {
         sp = GetComponent<SpriteRenderer>();
         index = 0;
         sp.sprite = sprites[index];
 
         StartCoroutine(Effect());
-	}
+    }
 
     private IEnumerator Effect()
     {

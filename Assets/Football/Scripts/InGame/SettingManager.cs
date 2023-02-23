@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-
 using UnityEngine.SceneManagement;
 
 public class SettingManager : MonoBehaviour
@@ -9,66 +8,66 @@ public class SettingManager : MonoBehaviour
     public SpriteRenderer playerFaceSp;
     public Transform playerFaceSelectedObj;
     private int playerFaceIndex;
+
+    public GameObject purchase;
+
     public int PlayerFaceIndex
     {
         set
         {
             playerFaceSelectedObj.GetChild(1).gameObject.SetActive(!(value == 0));
-            playerFaceSelectedObj.GetChild(0).gameObject.SetActive(!(value >= AssetManager.Use.playerSprite0.Length - 1));
+            playerFaceSelectedObj.GetChild(0).gameObject
+                .SetActive(!(value >= AssetManager.Use.playerSprite0.Length - 1));
 
             playerFaceSp.sprite = AssetManager.Use.playerSprite0[value];
             playerName.text = AssetManager.Use.playersName[value];
 
             playerFaceIndex = value;
         }
-        get
-        {
-            return playerFaceIndex;
-        }
+        get { return playerFaceIndex; }
     }
 
     public SpriteRenderer playerBodySp;
     public Transform playerBodySelectedObj;
     private int playerBodyIndex;
+
     public int PlayerBodyIndex
     {
         set
         {
             playerBodySelectedObj.GetChild(1).gameObject.SetActive(!(value == 0));
-            playerBodySelectedObj.GetChild(0).gameObject.SetActive(!(value >= AssetManager.Use.playerBodySprite.Length - 1));
+            playerBodySelectedObj.GetChild(0).gameObject
+                .SetActive(!(value >= AssetManager.Use.playerBodySprite.Length - 1));
 
             playerBodySp.sprite = AssetManager.Use.playerBodySprite[value];
 
             playerBodyIndex = value;
         }
-        get
-        {
-            return playerBodyIndex;
-        }
+        get { return playerBodyIndex; }
     }
 
     public SpriteRenderer playerShoesSp1, playerShoesSp2;
     public Transform playerShoesSelectedObj;
     private int playerShoesIndex;
+
     public int PlayerShoesIndex
     {
         set
         {
             playerShoesSelectedObj.GetChild(1).gameObject.SetActive(!(value == 0));
-            playerShoesSelectedObj.GetChild(0).gameObject.SetActive(!(value >= AssetManager.Use.shoesSprites.Length - 1));
+            playerShoesSelectedObj.GetChild(0).gameObject
+                .SetActive(!(value >= AssetManager.Use.shoesSprites.Length - 1));
 
             playerShoesSp1.sprite = playerShoesSp2.sprite = AssetManager.Use.shoesSprites[value];
 
             playerShoesIndex = value;
         }
-        get
-        {
-            return playerShoesIndex;
-        }
+        get { return playerShoesIndex; }
     }
 
     public SpriteRenderer ballSp;
     private int ballIndex;
+
     public int BallIndex
     {
         set
@@ -80,113 +79,105 @@ public class SettingManager : MonoBehaviour
 
             ballIndex = value;
         }
-        get
-        {
-            return ballIndex;
-        }
+        get { return ballIndex; }
     }
 
     public SpriteRenderer groundSp;
     private int groundIndex;
+
     public int GroundIndex
     {
         set
         {
             groundSp.transform.GetChild(1).gameObject.SetActive(!(value == 0));
 
-            groundSp.transform.GetChild(0).gameObject.SetActive(!(value >= AssetManager.Use.groundIconSprites.Length - 1));
+            groundSp.transform.GetChild(0).gameObject
+                .SetActive(!(value >= AssetManager.Use.groundIconSprites.Length - 1));
             groundSp.sprite = AssetManager.Use.groundIconSprites[value];
 
             groundIndex = value;
         }
-        get
-        {
-            return groundIndex;
-        }
+        get { return groundIndex; }
     }
 
     public SpriteRenderer dayAndNightSp;
     private int dayAndNightIndex;
+
     public int DayAndNightIndex
     {
         set
         {
             dayAndNightSp.transform.GetChild(1).gameObject.SetActive(!(value == 0));
-            dayAndNightSp.transform.GetChild(0).gameObject.SetActive(!(value >= AssetManager.Use.dayAndNightSprites.Length - 1));
+            dayAndNightSp.transform.GetChild(0).gameObject
+                .SetActive(!(value >= AssetManager.Use.dayAndNightSprites.Length - 1));
 
             dayAndNightSp.sprite = AssetManager.Use.dayAndNightSprites[value];
 
             dayAndNightIndex = value;
         }
-        get
-        {
-            return dayAndNightIndex;
-        }
+        get { return dayAndNightIndex; }
     }
 
     public SpriteRenderer weatherSp;
     private int weatherIndex;
+
     public int WeatherIndex
     {
         set
         {
             weatherSp.transform.GetChild(1).gameObject.SetActive(!(value == 0));
-            weatherSp.transform.GetChild(0).gameObject.SetActive(!(value >= AssetManager.Use.WeatherSprites.Length - 1));
+            weatherSp.transform.GetChild(0).gameObject
+                .SetActive(!(value >= AssetManager.Use.WeatherSprites.Length - 1));
 
             weatherSp.sprite = AssetManager.Use.WeatherSprites[value];
 
             weatherIndex = value;
         }
-        get
-        {
-            return weatherIndex;
-        }
+        get { return weatherIndex; }
     }
 
     public TextMesh gameTimeText;
     private int gameTimeIndex;
+
     public int GameTimeIndex
     {
         set
         {
             gameTimeText.transform.parent.GetChild(1).gameObject.SetActive(!(value == 0));
-            gameTimeText.transform.parent.GetChild(0).gameObject.SetActive(!(value >= AssetManager.Use.timesArray.Length - 1));
+            gameTimeText.transform.parent.GetChild(0).gameObject
+                .SetActive(!(value >= AssetManager.Use.timesArray.Length - 1));
 
             gameTimeText.text = AssetManager.Use.timesArray[value].ToString();
 
             gameTimeIndex = value;
         }
-        get
-        {
-            return gameTimeIndex;
-        }
+        get { return gameTimeIndex; }
     }
 
     public SpriteRenderer aiLevelSp;
     private int aiLevelIndex;
+
     public int AiLevelIndex
     {
         set
         {
             aiLevelSp.transform.parent.GetChild(1).gameObject.SetActive(!(value == 0));
-            aiLevelSp.transform.parent.GetChild(0).gameObject.SetActive(!(value >= AssetManager.Use.aiLevelSprites.Length - 1));
+            aiLevelSp.transform.parent.GetChild(0).gameObject
+                .SetActive(!(value >= AssetManager.Use.aiLevelSprites.Length - 1));
 
             aiLevelSp.sprite = AssetManager.Use.aiLevelSprites[value];
 
             aiLevelIndex = value;
         }
-        get
-        {
-            return aiLevelIndex;
-        }
+        get { return aiLevelIndex; }
     }
 
     private Transform tran;
 
-    void Start ()
-	{
+    void Start()
+    {
         Init();
-	}
+    }
 
     void Init()
     {
@@ -218,6 +209,11 @@ public class SettingManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            if (purchase.activeSelf)
+            {
+                return;
+            }
+
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
 
             if (hit.collider != null)
@@ -381,8 +377,16 @@ public class SettingManager : MonoBehaviour
 
     void SaveAndStart()
     {
-        SaveSetting();
+        if (GameDataManager.Instance.playerData.intDiamond > 0)
+        {
+            SaveSetting();
 
-        SceneManager.LoadScene("Game");
+            GameDataManager.Instance.playerData.SubDiamond(1);
+            SceneManager.LoadScene("Game");
+        }
+        else
+        {
+            purchase.SetActive(true);
+        }
     }
 }

@@ -2,28 +2,10 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class BackAndroid : MonoBehaviour 
+public class BackAndroid : MonoBehaviour
 {
-	public string ParentLeveleName;
-	public bool isMain;
-
-	void LateUpdate()
-	{
-		if (Input.GetKeyDown(KeyCode.Escape))
-		{
-            OnMouseUpAsButton();
-        }
-	}
-
-    void OnMouseDown()
-    {
-        transform.localScale = new Vector3(0.9f, 0.9f, 1);
-    }
-
-    void OnMouseUp()
-    {
-        transform.localScale = new Vector3(1, 1, 1);
-    }
+    public string ParentLeveleName;
+    public bool isMain;
 
     void OnMouseUpAsButton()
     {
@@ -35,5 +17,23 @@ public class BackAndroid : MonoBehaviour
             SceneManager.LoadScene(ParentLeveleName);
         else
             Application.Quit();
+    }
+
+    void OnMouseDown()
+    {
+        transform.localScale = new Vector3(0.9f, 0.9f, 1);
+    }
+
+    void OnMouseUp()
+    {
+        transform.localScale = new Vector3(1, 1, 1);
+    }
+
+    void LateUpdate()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            OnMouseUpAsButton();
+        }
     }
 }
